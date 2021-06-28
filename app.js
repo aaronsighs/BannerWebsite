@@ -55,12 +55,12 @@ const hair_types = [
 {
     description:"Beautiful Hair Beautiful Curls!",
     title:"ClipperCut",
-    image:"../images/clipperCut.jpg"
+    image:"../images/clipperCut.png"
 },
 {
     description:"Beautiful Hair Beautiful Curls!",
     title:"cut back",
-    image:"../images/cutBack.jpg"
+    image:"../images/cutBack.png"
 },
 {
     description:"Beautiful Hair Beautiful Curls!",
