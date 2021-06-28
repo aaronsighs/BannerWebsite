@@ -1,0 +1,169 @@
+
+<%- include("header") -%>
+
+
+
+
+<div id="section1" class="content">
+    <div class="container-fluid">
+
+
+        <div class="row">
+
+            <div class="col-md-6">
+               <h1>Perfect hair so you can be the perfect you</h1>
+               <h2>Book an appointment today!</h2>
+               <button class="btn btn-lrg orange-btn">Book</button>
+
+            </div>
+
+            
+
+
+        </div>
+        <img class="woman" src="../images/woman-img.png" alt="woman">
+
+
+      
+    </div>
+
+</div>
+
+    <div id="section2">
+        <div class="container">
+            <h2>Our Hair Styles</h2>
+
+            
+            <div class="row">
+
+
+                <% hair_types.forEach( (hair,index) => { %> 
+                    <div class="col-md-6 col-lg-4 col-xl-3">
+
+             
+
+                        <div class="card c<%=index%>">
+                            
+                            <div class="card-content">
+                                <div class="card-content-wrapper">
+                                    <div class="card-title"><%=hair.title %></div>
+                                    <div class="description"><%=hair.description %></div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+
+                    
+                    <script>
+                        var name ='<%=hair.image%>';
+                        var elementName = 'c' + '<%=index%>';
+                        document.getElementsByClassName(elementName)[0].style.backgroundImage = 'url("' + name + '")';
+                        document.getElementsByClassName(elementName)[0].style.backgroundRepeat = "no-repeat";
+                        document.getElementsByClassName(elementName)[0].style.backgroundSize = "cover";
+                    </script>
+                    
+                    <%});%>
+        </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+   
+
+</div>
+
+
+<div id="section3">
+    <h2>
+        What Our Customers Think!
+    </h2>
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000">
+
+        <div class="carousel-inner">
+
+
+
+            <% reviews.forEach( (review,index) => { %> 
+                <% if (index === 0) { %>
+                    <div class="carousel-item active">
+                <%}else{%>
+                    <div class="carousel-item">
+                <%}%>
+                    <div class="review">
+                        <div class="review-wrapper">
+                            <img src="<%=review.image%>">
+                                <h6> Rating:
+
+                                    <% for (i=1;i<=5;i++){%>
+                                        <% if (review.rating - i >= 0){%>
+                                            <i class="bi bi-star-fill"></i>
+                                            <%}else if (review.rating - i > -1){%>
+                                                <i class="bi bi-star-half"></i>
+                                                <%}else{%>
+                                                    <i class="bi bi-star"></i>
+                                               <%}%>
+                                            <%}%>
+
+
+
+                                </h6>
+                                
+                            <div class="quote"><p><%=review.comment%></p></div>
+                        </div>
+                    </div>
+                    </div>
+
+
+
+
+
+                <%});%>
+
+
+
+
+         
+
+
+</div>
+</div>
+</div>
+<div id="section4">
+    <h4>
+        Come Join Us!
+    </h4>
+    <img src="../images/storeFront.jpg">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include("footer") -%>
