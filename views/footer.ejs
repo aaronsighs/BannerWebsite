@@ -35,6 +35,7 @@
 </script>
 <script>
     var sel;
+    var selTime;
     var monthSelector = new Date().getMonth();
     var todaysDate = new Date();
     var yearSelector = new Date().getFullYear();
@@ -116,15 +117,45 @@
             let date = document.createElement("div");
             date.classList.add("date");
             newElem.id = "date-" + day + "-" + daysMonth + "-" + year;
+            let times = document.createElement("div");
+            times.classList.add("all-times")
+            if (sel !== newElem.id)
+                times.classList.add("hidden")
+
+            for (let i = 0; i < 4; i++) {
+                let time = document.createElement("div");
+                time.classList.add("time");
+                let modifier = day % 3 ? (day + 3) % 4 : (day + 4) % 5
+                time.textContent = `${i+1 + modifier}:00`
+                if (sel === newElem.id && selTime) {
+                    if (time.textContent !== selTime) {
+                        console.log(time.textContent, selTime)
+                        time.classList.add("hidden");
+                    }
+                }
+                time.addEventListener("click", e => {
+                    Array.from(document.querySelectorAll(`#${newElem.id} .time`)).forEach(ele => {
+                        if (ele !== e.target) {
+                            ele.classList.add("hidden")
+                        }
+                        selTime = e.target.textContent;
+                    })
+                })
+                times.appendChild(time)
+            }
+
             newElem.classList.add("normal");
-            if (curMonth && i > 0 && isToday(day)) {
+            if (isToday(day, daysMonth, specificYear)) {
                 newElem.classList.add("today");
-            } else if (specificYear <= todaysDate.getFullYear() && (daysMonth < todaysDate.getMonth() || (daysMonth === todaysDate.getMonth() && todaysDate.getDate() > day)) || specificYear < todaysDate.getFullYear()) {
+            }
+            if (specificYear <= todaysDate.getFullYear() && (daysMonth < todaysDate.getMonth() || (daysMonth === todaysDate.getMonth() && todaysDate.getDate() > day)) || specificYear < todaysDate.getFullYear() || ((day + specificYear) % 3 !== 0 && (day + specificYear) % 4 !== 0)) {
                 newElem.classList.add("crossed")
                 newElem.classList.remove("normal")
                 date.textContent = day;
+
                 newElem.appendChild(date);
-                grid.appendChild(newElem)
+                newElem.appendChild(times);
+                grid.appendChild(newElem);
                 continue
             }
             if (newElem.id === sel) {
@@ -138,13 +169,20 @@
                 removeHighlight();
                 e.target.classList.add("highlight")
                 sel = e.target.id;
+                e.target.lastChild.classList.remove('hidden')
+                selTime = null;
+
+
 
 
 
             });
 
             date.textContent = day;
+
+
             newElem.appendChild(date);
+            newElem.appendChild(times);
             grid.appendChild(newElem)
         }
     }
@@ -152,7 +190,13 @@
 
     function removeHighlight() {
         let grid = document.querySelector(".date-grid")
-        grid.childNodes.forEach(node => node.classList.remove("highlight"));
+        grid.childNodes.forEach(node => {
+            node.classList.remove("highlight");
+            node.lastChild.childNodes.forEach(node => node.classList.remove("hidden"))
+            node.lastChild.classList.add("hidden")
+
+        });
+
 
     }
 
@@ -206,8 +250,9 @@
         document.querySelector(".btn").classList.remove("hidden")
     }
 
-    function isToday(num) {
-        return new Date().getDate() === num;
+    function isToday(num, month, year) {
+        let d = new Date();
+        return d.getDate() === num && d.getFullYear() === year && d.getMonth() === month;
     }
 </script>
 

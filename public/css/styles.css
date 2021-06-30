@@ -5,7 +5,9 @@
     --main-text-color: rgb(228, 103, 19);
 }
 
-body {}
+body {
+    min-width: 280px;
+}
 
 
 /* ----------------------Header------------------ */
@@ -74,9 +76,19 @@ body {}
     border-top: 0px; */
 }
 
-.date-grid .day.normal:hover {
-    transform: scaleX(1.05) scaleY(1.15);
-    box-shadow: 0px 0px 10px;
+.highlight {
+    background-color: rgba(228, 103, 19, 0.939) !important;
+}
+
+@media (hover: hover) {
+    /* ... */
+    .date-grid .day.normal:hover {
+        transform: scaleX(1.05) scaleY(1.15);
+        box-shadow: 0px 0px 10px;
+    }
+    .highlight {
+        background-color: rgba(228, 103, 19, .6) !important;
+    }
 }
 
 .date {
@@ -86,11 +98,12 @@ body {}
 }
 
 .day.today {
-    background-color: rgba(173, 216, 230, 0.864);
+    background-color: rgba(173, 216, 230, 0.864) !important;
 }
 
 .day.crossed {
     background-color: #cececef0;
+    text-decoration: line-through;
 }
 
 .date-grid .day.crossed:hover {
@@ -153,7 +166,7 @@ body {}
 .popup.show {
     margin: 5px;
     position: absolute;
-    top: 34%;
+    top: 10%;
     width: 100%;
     height: 60%;
     left: 0;
@@ -165,18 +178,14 @@ body {}
 .popup-close {
     position: absolute;
     z-index: 61;
-    right: 5px;
-    top: -15px;
+    left: 0;
+    top: -20px;
     color: white;
     font-size: 1.5rem;
 }
 
 .popup .wrapper {
     height: fit-content;
-}
-
-.highlight {
-    background-color: rgba(228, 103, 19, .6) !important;
 }
 
 .ex {
@@ -196,6 +205,10 @@ body {}
     /* background-color: var(--lighter-secondary); */
 }
 
+.all-times {
+    display: inline-block;
+}
+
 .times {
     --width: 100%;
     --height: 100%;
@@ -208,6 +221,15 @@ body {}
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     overflow: hidden;
+}
+
+.time {
+    text-align: center;
+    margin-left: 10%;
+    display: inline-block;
+    text-decoration: underline;
+    color: rgb(7, 62, 163);
+    cursor: pointer;
 }
 
 .possible-times {
@@ -243,6 +265,21 @@ body {}
     .popup.show {
         width: 60%;
     }
+    .popup-close {
+        position: absolute;
+        z-index: 61;
+        right: 0;
+        left: auto;
+        top: -20px;
+        color: white;
+        font-size: 1.5rem;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .popup.show {
+        top: 34%;
+    }
 }
 
 
@@ -253,13 +290,12 @@ body {}
     background-color: var(--secondary-color);
     min-width: 100%;
     min-height: 800px;
-    position: relative;
     overflow: hidden;
 }
 
-#section1 .container {
-    min-height: 100%;
-}
+#section1 .wrapper {}
+
+#section1 .container-fluid {}
 
 #section1 .container .row {
     min-height: 100%;
@@ -288,6 +324,9 @@ body {}
     background-color: inherit;
     filter: brightness(108%) blur(.5px);
     transform: translateY(0px);
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 }
 
 .orange-btn {
