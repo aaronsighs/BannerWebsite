@@ -69,7 +69,7 @@ body {}
 .date-grid .day {
     background-color: white;
     border: .5px solid black;
-    box-shadow: 5px 5px 5px black;
+    box-shadow: 5px 5px 2px black;
     /* border-left: 0px;
     border-top: 0px; */
 }
@@ -86,7 +86,7 @@ body {}
 }
 
 .day.today {
-    background-color: lightblue;
+    background-color: rgba(173, 216, 230, 0.864);
 }
 
 .day.crossed {
@@ -129,7 +129,7 @@ body {}
     width: 100%;
     background-color: var(--main-text-color);
     height: 15%;
-    box-shadow: 5px 5px 5px black;
+    box-shadow: 5px 5px 2px black;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     /* border-bottom-left-radius: 10px;
@@ -176,7 +176,56 @@ body {}
 }
 
 .highlight {
-    background-color: rgba(118, 255, 118, 0.994) !important;
+    background-color: rgba(228, 103, 19, .6) !important;
+}
+
+.ex {
+    position: relative;
+    width: 33%;
+    height: 33%;
+    display: inline-block;
+    margin: 0;
+    font-size: 2rem
+}
+
+.or {
+    background-color: var(--main-text-color);
+}
+
+.blk {
+    /* background-color: var(--lighter-secondary); */
+}
+
+.times {
+    --width: 100%;
+    --height: 100%;
+    width: 90%;
+    height: 90%;
+    margin: 5%;
+    position: absolute;
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    overflow: hidden;
+}
+
+.possible-times {
+    position: relative;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.possible-times>* {}
+
+.long-weekday {
+    float: right;
+    width: 67%;
+    text-align: center;
+    align-self: center;
+    vertical-align: middle;
+    margin-top: 5%;
 }
 
 .popup-close:hover {
