@@ -1,38 +1,214 @@
-
 </body>
 <footer id="footer">
-<div>
-    <div class="logos">
-        <i class="bi bi-instagram"></i>
-        <i class="bi bi-facebook"></i>
-        <i class="bi bi-instagram"></i>
+    <div>
+        <div class="logos">
+            <i class="bi bi-instagram"></i>
+            <i class="bi bi-facebook"></i>
+            <i class="bi bi-instagram"></i>
+
+        </div>
+
 
     </div>
-
-
-</div>
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <script>
-        window.onscroll = function(){headerCheck()}
-    
-        header = document.getElementById("myHeader")
-    
-        sticky = header.offsetTop;
-    
-        function headerCheck(){
-            if (window.pageYOffset > sticky){
-                header.classList.add("sticky-header")
-            }else{
-                header.classList.remove("sticky-header")
-            }
+<script>
+    window.onscroll = function() {
+        headerCheck()
+    }
+
+    header = document.getElementById("myHeader")
+
+    sticky = header.offsetTop;
+
+    function headerCheck() {
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky-header")
+        } else {
+            header.classList.remove("sticky-header")
         }
-    
-    
-    </script>
-   
+    }
+</script>
+<script>
+    var sel;
+    var monthSelector = new Date().getMonth();
+    var todaysDate = new Date();
+    var yearSelector = new Date().getFullYear();
+    let btn = document.querySelector(".btn");
+    btn.addEventListener('click', e => {
+
+            let pop = document.querySelector(".popup");
+            pop.classList.add("show")
+            clearMonth();
+            setMonth(monthSelector, yearSelector);
+            document.querySelector(".btn").classList.add("hidden")
+        }
+
+
+    );
+
+    document.querySelector(".popup-close").addEventListener('click', closeCalender)
+
+    let next = document.querySelector(".chev.right")
+    next.addEventListener('click', nextMonth)
+
+    let prev = document.querySelector(".chev.left")
+    prev.addEventListener('click', prevMonth)
+
+
+
+
+
+
+
+    function drawMonth() {
+
+    }
+
+    function nextMonth() {
+        clearMonth()
+        monthSelector = monthSelector === 12 ? 1 : monthSelector + 1
+        if (monthSelector === 1) {
+            yearSelector = yearSelector + 1
+        }
+        setMonth(monthSelector, yearSelector);
+
+    }
+
+    function prevMonth() {
+        clearMonth()
+        monthSelector = monthSelector === 1 ? 12 : monthSelector - 1
+        if (monthSelector === 12) {
+            yearSelector = yearSelector - 1;
+        }
+        setMonth(monthSelector, yearSelector);
+
+    }
+
+
+    function setMonth(month, year) {
+
+        let curDate = new Date();
+        let curMonth = (month === curDate.getMonth())
+        let monthDay = document.querySelector(".curr-month").textContent = getMonthName(month) + " " + yearSelector
+
+        let grid = document.querySelector(".date-grid")
+        let firstDay = getFirstDayOfTheMonth(month);
+        let lastMonthsDays = getDaysInMonth(month - 1 < 1 ? 12 : month - 1)
+        let dateShift = firstDay === 7 ? 0 : -firstDay
+        let monthDays = getDaysInMonth(month);
+
+        for (let i = 1 + dateShift; i < monthDays + 1; i++) {
+            let newElem = document.createElement("div");
+            let day = i
+            let daysMonth = month;
+            let specificYear = year === 1 ? year - 1 : year
+            if (i < 1) {
+                day = lastMonthsDays + i
+                daysMonth = month - 1 < 1 ? 12 : month - 1
+
+            }
+            newElem.classList.add("day")
+            let date = document.createElement("div");
+            date.classList.add("date");
+            newElem.id = "date-" + day + "-" + daysMonth + "-" + year;
+            newElem.classList.add("normal");
+            if (curMonth && i > 0 && isToday(day)) {
+                newElem.classList.add("today");
+            } else if (specificYear <= todaysDate.getFullYear() && (daysMonth < todaysDate.getMonth() || (daysMonth === todaysDate.getMonth() && todaysDate.getDate() > day)) || specificYear < todaysDate.getFullYear()) {
+                newElem.classList.add("crossed")
+                newElem.classList.remove("normal")
+                date.textContent = day;
+                newElem.appendChild(date);
+                grid.appendChild(newElem)
+                continue
+            }
+            if (newElem.id === sel) {
+                newElem.classList.add("highlight");
+            }
+            newElem.addEventListener('click', e => {
+                if (e.target.id === "") {
+                    return
+                }
+
+                removeHighlight();
+                e.target.classList.add("highlight")
+                sel = e.target.id;
+
+
+
+            });
+
+            date.textContent = day;
+            newElem.appendChild(date);
+            grid.appendChild(newElem)
+        }
+    }
+
+
+    function removeHighlight() {
+        let grid = document.querySelector(".date-grid")
+        grid.childNodes.forEach(node => node.classList.remove("highlight"));
+
+    }
+
+    function highlight(year, month, day) {
+
+
+    }
+
+
+    function clearMonth() {
+        let grid = document.querySelector(".date-grid")
+        while (grid.lastChild) {
+            grid.removeChild(grid.lastChild);
+        }
+    }
+
+
+    function getMonthName(month) {
+        let d = new Date()
+        let date = new Date(d.getFullYear(), month);
+        let k = date.toLocaleString('default', {
+            month: 'long'
+        });
+        return k;
+
+    }
+
+
+    function getPrevMonthLastDay() {
+        monthSelector = monthSelector === 12 ? 1 : monthSelector + 1
+        setMonth(monthSelector);
+
+    }
+
+    function getFirstDayOfTheMonth(mont_num = null) {
+        let d = new Date();
+        return new Date(d.getFullYear(), mont_num ? mont_num : d.getMonth(), 1).getDay()
+    }
+
+    function getDaysInMonth(month_num = null) {
+        let d = new Date()
+        try {
+            return new Date(d.getFullYear(), month_num ? month_num + 1 : d.getMonth() + 1, 0).getDate();
+        } catch (err) {
+            return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+        }
+    }
+
+    function closeCalender() {
+        document.querySelector(".popup").classList.remove("show")
+        document.querySelector(".btn").classList.remove("hidden")
+    }
+
+    function isToday(num) {
+        return new Date().getDate() === num;
+    }
+</script>
+
 </html>

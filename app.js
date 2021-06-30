@@ -74,6 +74,8 @@ const hair_types = [
 ]
 
 
+
+
 const app = express();
 
 app.use(express.static("public"));
